@@ -6,10 +6,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class Algorithm {
 	//placeholder
@@ -32,6 +35,36 @@ public class Algorithm {
 	        writer.close();
 	}
 	
+	public static double jaccardCoefficient(List<Integer> primaryRecord, List<Integer> comparedRecord) {
+		//Primary Record is the record that we are comparing comparedRecord to to see how close comparedRecord is to it.
+		int a;
+		int b;
+		
+		double p = 0;
+		double q = 0;
+		double r = 0;
+		
+		for (int i = 1; i < primaryRecord.size(); i++) {
+			
+			a = primaryRecord.get(i);
+			b = comparedRecord.get(i);
+			
+			if (a == 1 && b == 1) {
+				//If Both are 1 (union)
+				p++;
+			} else if (a == 1 && b == 0) {
+				//Only if first data value is 1 and other is 0
+				q++;
+			} else if (a == 0 && b == 1) {
+				//Only if second data value is 1 and other is 0
+				r++;
+			}
+			
+		}
+		
+		return (p/(p+q+r));
+	}
+	
 	//Read file
 	public static Map<String, List<Integer>> readCSV(String filePath) {
         String line;
@@ -43,7 +76,7 @@ public class Algorithm {
             	List<Integer> temporary = new ArrayList<Integer>();
                 String[] values = line.split(","); // Splitting CSV by commas
                 for (int i = 0; i < values.length; i++) {
-                	if (i != 0 && i != 1) {
+                	if (i != 0) {
                 		temporary.add(Integer.parseInt(values[i]));
                 	}
                 }
@@ -56,16 +89,81 @@ public class Algorithm {
         return test;
     }
 	
+	/*
+	 * Method predicts rather "predictRecord" will be 90+ or 90- based on the records in "comparisonDataSet"
+	 */
+	
+	public static String predictRecord(Map.Entry<String, List<Integer>> predictRecord, Map<String, List<Integer>> comparisonDataSet, int K) {
+		
+		//Calculate coefficients for record and comparison dataset, place it in hashmap where key is the coefficient, value is the entryset of the comparison data set
+		Map<Map.Entry<String, List<Integer>>, Double> coefficients = new LinkedHashMap<>();
+		
+		for (Map.Entry<String, List<Integer>> iterator : comparisonDataSet.entrySet()) {
+			coefficients.put(iterator, jaccardCoefficient(predictRecord.getValue(), iterator.getValue()));
+		}
+		
+		//Sort for prediction with K
+		List<Map.Entry<Map.Entry<String, List<Integer>>, Double>> sortedList = coefficients.entrySet()
+                .stream()
+                .sorted(Map.Entry.<Map.Entry<String, List<Integer>>, Double>comparingByValue(Comparator.reverseOrder())) // Sort by values
+                .collect(Collectors.toList());
+		
+		int plusCount = 0;
+		int minusCount = 0;
+		
+		for (int i = 0; i < K; i++) {
+			if (sortedList.get(i).getKey().getValue().get(0) == 1) {
+				plusCount++;
+			} else {
+				minusCount++;
+			}
+		}
+		
+		String returnString = "";
+		if (plusCount > minusCount) {
+			returnString = predictRecord.getKey() + " : 90+";
+		} else if (plusCount < minusCount) {
+			returnString = predictRecord.getKey() + " : 90-";
+		} else {
+			returnString = predictRecord.getKey() + "Neutral";
+		}
+		
+		return returnString;
+		
+	}
+	
 	public static void main(String[] args) {
-		Map<String, List<Integer>> dataSet = readCSV("Testing dataset.csv");
-		/*
-		for (Map.Entry<String, List<Integer>> entry : dataSet.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
+		Map<String, List<Integer>> trainingDataSet = readCSV("Training dataset.csv");
+		Map<String, List<Integer>> testingDataSet = readCSV("Testing dataset.csv");
+		
+        List<Map.Entry<String, List<Integer>>> indexTrainingReference = new ArrayList<>();
+        List<Map.Entry<String, List<Integer>>> indexTestingReference = new ArrayList<>();
+        
+        for (Map.Entry<String, List<Integer>> entry : trainingDataSet.entrySet()) {
+            indexTrainingReference.add(entry);
         }
-        */
-		
-		
-		
+        
+        for (Map.Entry<String, List<Integer>> entry : testingDataSet.entrySet()) {
+        	indexTestingReference.add(entry);
+        }
+        
+        
+        
+        //Delete later
+        List<Map.Entry<String, List<Integer>>> entryList = new ArrayList<>(trainingDataSet.entrySet());
+        List<Map.Entry<String, List<Integer>>> secondEntryList = new ArrayList<>(testingDataSet.entrySet());
+        List<String> results = new ArrayList<>();
+        for (int i = 0; i < secondEntryList.size(); i++) {
+        	results.add(predictRecord(secondEntryList.get(i), trainingDataSet, 7));
+        }
+        
+        try {
+			writeResultsToFile(results, "resultFile.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
 	}
 
 }
