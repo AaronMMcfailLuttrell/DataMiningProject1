@@ -132,6 +132,21 @@ public class Algorithm {
 		
 	}
 	
+	public static Double calculateAccuracy(List<Map.Entry<String, List<Integer>>> testingData, List<Integer> predictedResults) {
+		
+		double amountAccurate = 0;
+		
+		for (int i = 0; i < testingData.size(); i++) {
+			if (testingData.get(i).getValue().get(0) == predictedResults.get(i)) {
+				amountAccurate++;
+			}
+		}
+		
+		System.out.println(amountAccurate/testingData.size());
+		
+		return (amountAccurate/testingData.size());
+	}
+	
 	public static void main(String[] args) {
 		Map<String, List<Integer>> trainingDataSet = readCSV("Training dataset.csv");
 		Map<String, List<Integer>> testingDataSet = readCSV("Testing dataset.csv");
@@ -153,8 +168,14 @@ public class Algorithm {
         List<Map.Entry<String, List<Integer>>> entryList = new ArrayList<>(trainingDataSet.entrySet());
         List<Map.Entry<String, List<Integer>>> secondEntryList = new ArrayList<>(testingDataSet.entrySet());
         List<String> results = new ArrayList<>();
+        List<Integer> valuesBool = new ArrayList<>();
         for (int i = 0; i < secondEntryList.size(); i++) {
         	results.add(predictRecord(secondEntryList.get(i), trainingDataSet, 7));
+        	if (results.get(i).contains("90+")) {
+        		valuesBool.add(1);
+        	} else if (results.get(i).contains("90-")) {
+        		valuesBool.add(0);
+        	}
         }
         
         try {
@@ -163,6 +184,8 @@ public class Algorithm {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        
+        calculateAccuracy(secondEntryList, valuesBool);
         
 	}
 
