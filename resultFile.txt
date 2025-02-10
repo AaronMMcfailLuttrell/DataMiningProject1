@@ -1,19 +1,21 @@
-J. WEGELER ERBEN Riesling Beerenauslese Mosel-Saar-Ruwer Wehlener Sonnenuhr : 90-
-J. WEGELER ERBEN Riesling Trockenbeerenauslese Rheingau Geisenheimer Rothenberg 309Â° : 90-
-J. WEGELER ERBEN Riesling Trockenbeerenauslese Rheingau Geisenheimer Rothenberg : 90+
-ROBERT WEIL Riesling Auslese Gold Cap Rheingau Kiedrich GrÃ¤fenberg : 90+
-WEINBACH GewÃ¼rztraminer Alsace Grand Cru Mambourg Quintessence de Grains Nobles CuvÃ©e d'Or : 90+
-WHISTLING EAGLE Shiraz Heathcote Eagles Blood : 90+
-ZIND-HUMBRECHT Pinot Gris Alsace Hunawihr Clos Windsbuhl Vendange Tardive : 90+
-ZIND-HUMBRECHT Pinot Gris Alsace Wintzenheim Rotenberg SÃ©lection des Grains Nobles : 90+
-ZIND-HUMBRECHT Pinot Gris Alsace Hunawihr Clos Windsbuhl Trie SpÃ©ciale SÃ©lection des Grains Nobles : 90+
-BEAUX FRÃˆRES Pinot Noir Willamette Valley The Beaux FrÃ¨res Vineyard : 90+
-DUCK WALK RosÃ© The Hamptons Long Island : 90-
-RAYMOND DUPONT-FAHN Bourgogne White Chaumes des PerriÃ¨res : 90-
-DOMINIO DE EGUREN ViÃ±o de la Tierra de Castilla Protocolo White : 90-
-HERDADE DO ESPORÃƒO Alentejo Monte Velho White : 90+
-FAIRVIEW Pinotage Western Cape La Capra : 90-
-FALSE BAY VINEYARDS Shiraz Western Cape : 90+
-FALSE BAY VINEYARDS Chenin Blanc Western Cape : 90-
-FATTORIA DI FELSINA Toscana White Pepestrino : 90-
-FEUDO ARANCIO Sicilia White Dalila : 90-
+PREDICTED LABEL                                  ACTUAL LABEL
+--------------------------------------------------------------------------
+J. WEGELER ERBEN Riesling Beerenauslese Mosel-Saar-Ruwer Wehlener Sonnenuhr - Predicted: 90-   Actual: 90+
+J. WEGELER ERBEN Riesling Trockenbeerenauslese Rheingau Geisenheimer Rothenberg 309Â° - Predicted: 90-   Actual: 90+
+J. WEGELER ERBEN Riesling Trockenbeerenauslese Rheingau Geisenheimer Rothenberg - Predicted: 90+   Actual: 90+
+ROBERT WEIL Riesling Auslese Gold Cap Rheingau Kiedrich GrÃ¤fenberg - Predicted: 90+   Actual: 90+
+WEINBACH GewÃ¼rztraminer Alsace Grand Cru Mambourg Quintessence de Grains Nobles CuvÃ©e d'Or - Predicted: 90+   Actual: 90+
+WHISTLING EAGLE Shiraz Heathcote Eagles Blood - Predicted: 90+   Actual: 90+
+ZIND-HUMBRECHT Pinot Gris Alsace Hunawihr Clos Windsbuhl Vendange Tardive - Predicted: 90+   Actual: 90+
+ZIND-HUMBRECHT Pinot Gris Alsace Wintzenheim Rotenberg SÃ©lection des Grains Nobles - Predicted: 90+   Actual: 90+
+ZIND-HUMBRECHT Pinot Gris Alsace Hunawihr Clos Windsbuhl Trie SpÃ©ciale SÃ©lection des Grains Nobles - Predicted: 90+   Actual: 90+
+BEAUX FRÃˆRES Pinot Noir Willamette Valley The Beaux FrÃ¨res Vineyard - Predicted: 90+   Actual: 90+
+DUCK WALK RosÃ© The Hamptons Long Island - Predicted: 90-      Actual: 90-
+RAYMOND DUPONT-FAHN Bourgogne White Chaumes des PerriÃ¨res - Predicted: 90-   Actual: 90-
+DOMINIO DE EGUREN ViÃ±o de la Tierra de Castilla Protocolo White - Predicted: 90-   Actual: 90-
+HERDADE DO ESPORÃƒO Alentejo Monte Velho White - Predicted: 90+   Actual: 90-
+FAIRVIEW Pinotage Western Cape La Capra - Predicted: 90+       Actual: 90-
+FALSE BAY VINEYARDS Shiraz Western Cape - Predicted: 90+       Actual: 90-
+FALSE BAY VINEYARDS Chenin Blanc Western Cape - Predicted: 90-   Actual: 90-
+FATTORIA DI FELSINA Toscana White Pepestrino - Predicted: 90-   Actual: 90-
+FEUDO ARANCIO Sicilia White Dalila - Predicted: 90-            Actual: 90-

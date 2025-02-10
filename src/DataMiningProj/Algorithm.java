@@ -169,6 +169,7 @@ public class Algorithm {
         List<Map.Entry<String, List<Integer>>> secondEntryList = new ArrayList<>(testingDataSet.entrySet());
         List<String> results = new ArrayList<>();
         List<Integer> valuesBool = new ArrayList<>();
+        /*
         for (int i = 0; i < secondEntryList.size(); i++) {
         	results.add(predictRecord(secondEntryList.get(i), trainingDataSet, 7));
         	if (results.get(i).contains("90+")) {
@@ -177,7 +178,33 @@ public class Algorithm {
         		valuesBool.add(0);
         	}
         }
-        
+        */
+        // Header for Results file
+        results.add("PREDICTED LABEL                                  ACTUAL LABEL");
+        results.add("--------------------------------------------------------------------------");
+
+        // Output results with Prediction vs Actual
+        for (int i = 0; i < secondEntryList.size(); i++) {
+            // Predict
+            String rawPrediction = predictRecord(secondEntryList.get(i), trainingDataSet, 9);
+
+            // Transform "WineName : 90+" => "WineName - Predicted: 90+"
+            String predictionWithLabel = rawPrediction.replace(" : ", " - Predicted: ");
+
+            //  Actual label
+            int actualValue = secondEntryList.get(i).getValue().get(0);
+            String actualLabel = (actualValue == 1) ? "90+" : "90-";
+
+            String combinedLine = String.format("%-60s   Actual: %s", predictionWithLabel, actualLabel);
+            results.add(combinedLine);
+
+            // Track predicted label for accuracy
+            if (rawPrediction.contains("90+")) {
+                valuesBool.add(1);
+            } else if (rawPrediction.contains("90-")) {
+                valuesBool.add(0);
+            }
+        }
         try {
 			writeResultsToFile(results, "resultFile.txt");
 		} catch (IOException e) {
@@ -185,7 +212,35 @@ public class Algorithm {
 			e.printStackTrace();
 		}
         
+        
+        /*
+         * Generate word document required format
+         */
+        results.clear();
+        results.add("Real Grade\tPredicted Grade");
+        for (int i = 0; i < secondEntryList.size(); i++) {
+        	String temp = "";
+        	if (predictRecord(secondEntryList.get(i), trainingDataSet, 7).contains("90+")) {
+        		temp += "1\t\t";
+        	} else if (predictRecord(secondEntryList.get(i), trainingDataSet, 7).contains("90-")) {
+        		temp += "0\t\t";
+        	}
+        	
+        	temp += secondEntryList.get(i).getValue().get(0);
+        	
+        	results.add(temp);
+        	
+        }
+        
+        try {
+        	writeResultsToFile(results, "requiredOutput.txt");
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
+        
         calculateAccuracy(secondEntryList, valuesBool);
+        
+        
         
 	}
 
